@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { IoSendSharp } from "react-icons/io5";
+import {toast , Toaster} from "react-hot-toast";
+
 import axios from "axios";
 // Add interface for chat message type
 interface ChatMessage {
@@ -52,6 +54,7 @@ const ChatArea = () => {
       const data = response.data;
       setChatData((prev) => [...prev, { text: data.payload.response, sender: "bot" }]);
     } catch (error) {
+      toast.error("An unexpected error occurred");  
       const errorMessage =
         error instanceof Error ? error.message : "An unexpected error occurred";
       setChatData((prev) => [
@@ -63,6 +66,7 @@ const ChatArea = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto bg-white/90 rounded-xl shadow-lg overflow-hidden">
+      <Toaster />
       <div className="h-auto min-h-4xl overflow-y-auto p-4 space-y-4">
         {chatData.length > 0 ? (
           chatData.map((message, index) => (

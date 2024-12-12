@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { ToggleButton } from "../context/ThemeToggle";
 import { apiRecord } from "../constants/formats";
 import fetchUserData from "../functions/fetchUser";
-
+import { toast , Toaster } from "react-hot-toast";
 const Profile = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -38,6 +38,7 @@ const Profile = () => {
           }
         }
       } catch (error) {
+        toast.error("Error loading user data. Please try again later");
         console.error("Error loading user data:", error);
         navigate("/signin");
       } finally {
@@ -60,6 +61,7 @@ const Profile = () => {
   if (loading) {
     return (
       <div className="h-screen w-screen flex items-center justify-center">
+        <Toaster position="top-right" />
         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-secondary"></div>
       </div>
     );
@@ -67,6 +69,7 @@ const Profile = () => {
 
   return (
     <div className="relative w-screen h-auto">
+      <Toaster />
       <div className="h-screen w-screen flex flex-col items-center">
         <motion.div
           variants={slideIn("left", "tween", 0.2, 1)}

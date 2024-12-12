@@ -1,6 +1,6 @@
 import { signout } from "../functions/signout";
 import { useNavigate } from "react-router-dom";
-
+import { Toaster,  toast } from "react-hot-toast";
 
 const Signout = () => {
   const navigate = useNavigate();
@@ -8,14 +8,16 @@ const Signout = () => {
     e.preventDefault();
     try {
       await signout();
-      console.log("signed out");
+      toast.success("signed out");
       navigate("/signin");
     } catch (error: any) {
       console.log(error);
     }
   };
   return (
+    
     <div className="flex justify-center items-center h-screen">
+      <Toaster />
         <button
     className="bg-red-500 text-white p-2 rounded-md"
     onClick={handleSignout}

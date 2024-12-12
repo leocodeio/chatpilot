@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { GiCrossedBones } from "react-icons/gi";
 import { SiChatbot } from "react-icons/si";
 import { IoSendSharp } from "react-icons/io5";
+import { Toaster, toast } from "react-hot-toast";
 
 const DummyChatbot = () => {
   const [chatOpen, setChatOpen] = useState(false);
@@ -10,7 +11,10 @@ const DummyChatbot = () => {
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (!chatInput.trim()) return;
+    if (!chatInput.trim()) {
+      toast.error("Message cannot be empty!");
+      return;
+    }
 
     setChatData((prevChatData) => [
       ...prevChatData,
@@ -44,8 +48,11 @@ const DummyChatbot = () => {
         ...prevChatData,
         { text: data.results || "No response from bot.", sender: "bot" },
       ]);
+
+      toast.success("Message sent successfully!");
     } catch (error) {
       console.error("Error:", error);
+
       setChatData((prevChatData) => [
         ...prevChatData,
         {
@@ -53,6 +60,8 @@ const DummyChatbot = () => {
           sender: "bot",
         },
       ]);
+
+      toast.error("An error occurred while fetching the bot's response.");
     }
   };
 
@@ -67,6 +76,9 @@ const DummyChatbot = () => {
 
   return (
     <>
+      {/* Toaster for Notifications */}
+      <Toaster position="bottom-center" reverseOrder={false} />
+
       <button
         type="button"
         onClick={(e) => {

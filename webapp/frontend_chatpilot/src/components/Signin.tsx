@@ -7,7 +7,7 @@ import { slideIn } from "./utils/motion";
 import { FaHome } from "react-icons/fa";
 import { ToggleButton } from "../context/ThemeToggle";
 import { StarsCanvas } from "./canvas";
-
+import { Toaster ,toast} from "react-hot-toast";
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,14 +31,20 @@ const Signin = () => {
         setEmail("");
         setPassword("");
         navigate("/");
+        toast.success("Signed in successfully");
       }
-    } catch (error: any) {
-      console.log("Error during signin:", error);
+    } catch (err: any) {
+      console.log("Error during signin:", err);
+      toast.error("Invalid email or password");
     }
   };
 
   return (
+    
+    
+    
     <div className="relative w-screen h-screen">
+      <Toaster />
       <div className="h-screen w-screen flex flex-col items-center">
         <motion.div
           variants={slideIn("left", "tween", 0.2, 1)}

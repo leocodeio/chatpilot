@@ -5,6 +5,7 @@ import emailjs from "@emailjs/browser";
 import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "./hoc";
 import { slideIn } from "./utils/motion";
+import toaster from "react-hot-toast";
 
 const Contact = () => {
   const formRef = useRef();
@@ -46,7 +47,7 @@ const Contact = () => {
       .then(
         () => {
           setLoading(false);
-          alert("Thank you. I will get back to you as soon as possible.");
+          toaster.success("Thank you. I will get back to you as soon as possible.");
 
           setForm({
             name: "",
@@ -58,7 +59,7 @@ const Contact = () => {
           setLoading(false);
           console.error(error);
 
-          alert("Ahh, something went wrong. Please try again.");
+          toaster.error("Ahh, something went wrong. Please try again.");
         }
       );
   };
